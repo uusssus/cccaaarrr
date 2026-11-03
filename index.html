@@ -1,0 +1,113 @@
+<!doctype html><html lang="ko"><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>부산 칼치기 — 60초의 틈</title><style>
+*{box-sizing:border-box}body{margin:0;background:#07171f;color:#eff6ed;font-family:Arial,'Malgun Gothic',sans-serif}header{height:82px;display:flex;align-items:center;justify-content:space-between;padding:0 5%;border-bottom:1px solid #24404a}header b{font-size:22px}header small{color:#83a5ad;letter-spacing:3px}.tag{color:#d4f677;font-size:12px;border:1px solid #49603d;border-radius:30px;padding:8px 15px}main{max-width:1440px;margin:auto;padding:27px 4%} .top{display:flex;justify-content:space-between;align-items:end;margin-bottom:20px}h1{font-size:38px;letter-spacing:-2px;margin:3px 0} .muted{color:#87a4ac;font-size:13px}.layout{display:grid;grid-template-columns:1fr 280px;gap:20px}.stage{position:relative;border:1px solid #36515b;border-radius:16px;overflow:hidden;background:#102e38;aspect-ratio:1.48}canvas{width:100%;height:100%;display:block}.hud{position:absolute;top:18px;left:22px;right:22px;display:flex;justify-content:space-between;pointer-events:none}.metric{font-size:27px;font-weight:bold;text-shadow:0 2px 8px #000}.metric small{display:block;font-size:10px;letter-spacing:2px;color:#b5c8cc;margin-bottom:4px}.lime{color:#d4f677}.overlay{position:absolute;inset:0;background:#061820b8;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:24px;backdrop-filter:blur(4px)}.overlay h2{font-size:48px;letter-spacing:-3px;margin:10px}.overlay p{line-height:1.8;color:#c1d2d7;font-size:14px}.btn{background:#d4f677;color:#15251b;font-weight:bold;border:0;padding:17px 32px;border-radius:8px;font-size:16px;cursor:pointer}.eyebrow{font-size:11px;letter-spacing:4px;color:#d4f677}.panel{background:#10252e;border:1px solid #29414b;border-radius:14px;padding:22px;margin-bottom:16px}.panel h3{font-size:14px;margin:0 0 22px}.keyrow{display:flex;align-items:center;justify-content:space-between;font-size:13px;margin:17px 0;color:#b7cbd0}kbd{display:inline-block;border:1px solid #52636b;border-bottom:3px solid #52636b;border-radius:5px;padding:6px 9px;color:white;background:#1b333e} .rule{font-size:13px;line-height:1.9;color:#a9c0c6}.line{height:1px;background:#29414b;margin:18px 0}.big{font-size:35px;color:#d4f677;font-weight:bold}.bottom{display:flex;justify-content:space-between;padding:15px 3px;font-size:12px;color:#809da6}#toast{position:absolute;top:27%;left:0;right:0;text-align:center;font-weight:bold;color:#d4f677;font-size:24px;pointer-events:none;text-shadow:0 2px 5px #000}.touch{display:flex;gap:8px;margin-top:8px}.touch button{flex:1;background:#19333f;color:white;border:1px solid #49606a;border-radius:7px;padding:13px;touch-action:none;user-select:none}.hidden{display:none}@media(max-width:850px){header{height:65px}.layout{grid-template-columns:1fr}.side{display:grid;grid-template-columns:1fr 1fr;gap:10px}.panel{padding:16px}h1{font-size:28px}.stage{aspect-ratio:1.1} .overlay h2{font-size:36px}.top .muted:last-child{display:none}}
+</style><header><b>부산 칼치기 <small> / BUSAN GAP RUN</small></b><span class="tag">60 SECOND CHALLENGE</span></header><main><div class="top"><div><span class="eyebrow">틈을 읽고, 타이밍을 잡아라</span><h1>도시의 흐름 속으로.</h1></div><span class="muted">3 LANES · FIRST PERSON · 60 SECONDS</span></div><div class="layout"><div><div class="stage"><canvas id="game" width="1200" height="810"></canvas><div class="hud"><div class="metric"><small>SUCCESS</small><span id="score">00</span></div><div class="metric lime"><small>TIME LEFT</small><span id="time">60.0</span></div><div class="metric"><small>VEHICLE HP</small><span id="hp">●●●●●</span></div></div><div id="toast"></div><div class="overlay" id="overlay"><span class="eyebrow" id="overline">BUSAN · BLUE HOUR</span><h2 id="heading">60초, 틈을 파고들어.</h2><p id="description">붉은 충돌 경계에서 1.5m 이내로 스쳐 지나가세요.<br>추월 후 그 차량 앞으로 차선 이동을 끝내면 1점.<br>사이드미러와 중앙 백미러로 뒤차를 확인하세요.</p><button class="btn" id="start">시동 걸기 ↗</button></div></div><div class="bottom"><span id="status">READY TO DRIVE</span><span>부산 칼치기 / 가상 주행 게임</span></div><div class="touch"><button data-key="ArrowLeft">← 좌측</button><button data-key="ArrowRight">우측 →</button><button data-key="a">A 가속</button><button data-key="s">S 감속</button></div></div><aside class="side"><div class="panel"><h3>DRIVING GUIDE</h3><div class="keyrow"><span>차선 이동 · 0.8초 유지</span><span><kbd>←</kbd> <kbd>→</kbd></span></div><div class="keyrow"><span>가속 · 최대 +40%</span><kbd>A</kbd></div><div class="keyrow"><span>감속 · 최대 −40%</span><kbd>S</kbd></div><div class="line"></div><div class="rule">A/S를 3초 유지하면 최대 변화.<br>손을 떼면 1초 동안 기본 속도로 복귀.<br>차선 이동 중 손을 떼면 원래 차선으로 돌아옵니다.</div></div><div class="panel"><h3>THE CLOSE PASS</h3><div class="big">아슬아슬, 1점.</div><p class="rule">붉은 충돌 경계에서 1.5m 이내로 추월한 뒤, 6초 안에 그 차량 앞으로 차선 이동을 완료하면 1점. 뒤차와의 거리는 18m 이내여야 합니다. 단순 추월·충돌·이동 취소는 점수에서 제외합니다.</p><div class="line"></div><div class="rule">상대 차량은 차선을 유지하며, 세 차선이 막히려 하면 한 차량이 가속합니다.<br>같은 차선의 뒤차는 안전거리를 유지합니다.<br>60초 경과 또는 체력 0이면 종료.</div></div></aside></div></main><script>
+'use strict';
+const canvas=document.getElementById('game'),ctx=canvas.getContext('2d'),$=id=>document.getElementById(id),keys={};
+const L=4.4,BASE=26,RATE=BASE*.4/3;let state='ready',time=60,score=0,hp=5,speed=BASE,x=1,lane=1,move=null,traffic=[],clock=0,road=0,hit=0,toastTimer=0,spawnTimer=0,returnStart=null,uid=0;
+let seed=17;function rand(){seed=(seed*1664525+1013904223)>>>0;return seed/4294967296}function clamp(n,a,b){return Math.max(a,Math.min(b,n))}
+function car(l,z,v=BASE){return {id:uid++,lane:l,x:l,z,v,target:v,hit:false,color:['#e9dfc6','#d56f58','#649ba5','#b7c6bb','#ddbd62'][Math.floor(rand()*5)]}}
+function reset(){time=60;score=0;hp=5;speed=BASE;x=1;lane=1;move=null;traffic=[];clock=road=hit=0;spawnTimer=0;returnStart=null;seed=17;const positions=[[-6,6,50,62,98],[-38,34,78,116],[-22,-10,28,40,132]];positions.forEach((zs,l)=>zs.forEach(z=>traffic.push(car(l,z,BASE+(l===1?.5:-.2)))));Object.keys(keys).forEach(k=>keys[k]=false);state='playing';$('overlay').classList.add('hidden');updateHUD()}
+function notify(s){$('toast').textContent=s;toastTimer=1.3}
+function finish(){state='ended';Object.keys(keys).forEach(k=>keys[k]=false);$('overlay').classList.remove('hidden');$('overline').textContent=hp===0?'VEHICLE STOPPED':'CHALLENGE COMPLETE';$('heading').textContent=score+'회 성공';$('description').innerHTML='최종 점수: 칼치기 성공 '+score+'회<br>'+ (hp===0?'체력이 모두 소진됐습니다.':'60초 주행을 완료했습니다.');$('start').textContent='다시 도전 ↗'}
+function updateHUD(){$('score').textContent=String(score).padStart(2,'0');$('time').textContent=Math.max(0,time).toFixed(1);$('hp').textContent='●'.repeat(hp)+'○'.repeat(5-hp);$('status').textContent=state==='playing'?`속도 ${Math.round(speed/BASE*100)}%  /  ${move?(move.cancel?'원래 차선 복귀 중':'차선 이동 중'):'주행 중'}`:'READY TO DRIVE'}
+function trackPass(c){
+if(c.z>L*.94)c.wasAhead=true;
+if(Math.abs(c.z)<L*1.4){let clearance=Math.abs(c.x-x)*3.5-2.1;if(clearance>=0&&clearance<=1.5)c.nearPass=true;}
+if(c.wasAhead&&c.nearPass&&c.z < -L*.94&&c.passedAt==null)c.passedAt=clock;
+}
+function scoreMerge(completed){
+if(!completed||completed.collided||hit>0)return;
+const eligible=traffic.filter(c=>c.lane===completed.to&&!c.scored&&!c.passFailed&&c.nearPass&&c.passedAt!=null&&clock-c.passedAt<=6&&c.z<=-L*.94&&c.z>=-18).sort((a,b)=>b.z-a.z);
+if(eligible.length){eligible[0].scored=true;score++;notify('아슬아슬 칼치기 +1');}
+}
+function openTrafficGap(dt){
+for(const c of traffic)c.v=c.target;
+const front=traffic.filter(c=>c.z>0&&c.z<150);
+for(const a of front.filter(c=>c.lane===0))for(const b of front.filter(c=>c.lane===1))for(const c of front.filter(c=>c.lane===2)){
+const group=[a,b,c],pred=group.map(t=>t.z+(t.v-speed)*3);
+if(Math.max(...pred)-Math.min(...pred)<18||Math.max(...group.map(t=>t.z))-Math.min(...group.map(t=>t.z))<18){
+const lead=group.reduce((best,t)=>t.z>best.z?t:best);lead.target=Math.max(lead.target,BASE*1.35);lead.v=lead.target;
+}
+}
+}
+function update(dt){if(state!=='playing')return;let completedMove=null;clock+=dt;time-=dt;road+=speed*dt;hit=Math.max(0,hit-dt);toastTimer-=dt;if(toastTimer<=0)$('toast').textContent='';let dir=(keys.a?1:0)-(keys.s?1:0);if(dir){returnStart=null;speed=clamp(speed+dir*RATE*dt,BASE*.6,BASE*1.4)}else{if(!returnStart)returnStart={v:speed,t:0};returnStart.t+=dt;speed=returnStart.v+(BASE-returnStart.v)*clamp(returnStart.t,0,1)}
+if(!move){let d=(keys.ArrowRight?1:0)-(keys.ArrowLeft?1:0);if(d&&lane+d>=0&&lane+d<=2)move={from:lane,to:lane+d,p:0,key:d>0?'ArrowRight':'ArrowLeft',cancel:false,collided:false}}
+if(move){if(!keys[move.key])move.cancel=true;move.p=clamp(move.p+(move.cancel?-dt:dt)/.8,0,1);let p=move.p;x=move.from+(move.to-move.from)*(p*p*(3-2*p));if(move.p>=1){lane=move.to;completedMove=move;move=null}else if(move.cancel&&move.p<=0){lane=move.from;x=lane;move=null}}
+openTrafficGap(dt);
+// Traffic stays in its lane; selected leaders accelerate to avoid a roadblock. Rear cars match
+// the player while preserving their captured safe following distance.
+for(const c of traffic){
+const following=c.z<0&&Math.abs(c.x-x)<.60;
+if(following){if(c.followGap==null)c.followGap=Math.max(6.5,-c.z);c.z=-c.followGap;}
+else{c.followGap=null;c.z+=(c.v-speed)*dt;}
+if(Math.abs(c.x-x)<.60&&Math.abs(c.z)<L*.94){c.passFailed=true;if(!c.hit&&hit<=0){hp--;hit=1;notify('충돌 · 체력 −1');if(move)move.collided=true}c.hit=true}else c.hit=false;trackPass(c)}
+scoreMerge(completedMove);
+traffic=traffic.filter(c=>c.z>-85&&c.z<170);spawnTimer+=dt;if(spawnTimer>6){spawnTimer=0;for(let l=0;l<3;l++){if(!traffic.some(c=>Math.abs(c.x-l)<.4&&c.z>45)){traffic.push(car(l,82+l*18,BASE+(rand()-.5)*2));if(l!==lane)traffic.push(car(l,94+l*18,BASE+(rand()-.5)*2))}if(!traffic.some(c=>Math.abs(c.x-l)<.4&&c.z<0))traffic.push(car(l,-48,BASE+.7))}}
+
+updateHUD();if(time<=0||hp<=0)finish()}
+function poly(points,color){ctx.fillStyle=color;ctx.beginPath();points.forEach((p,i)=>i?ctx.lineTo(...p):ctx.moveTo(...p));ctx.closePath();ctx.fill()}
+// Eye height 1.15 m, lane width 3.5 m; camera fixed inside the cockpit.
+function project(wx,z){let depth=Math.max(.8,z+2.2),s=14/depth;return {x:600+(wx-x)*3500/depth,y:352+1150/depth,s}}
+function vehicleModel(c,camera={cx:600,cy:352,f:1000,eye:x,reverse:false}){
+const faces=[],length=L*.47;
+const vertex=(vx,y,z)=>({x:(c.x-camera.eye)*3.5+vx,y:y-1.15,z:(camera.reverse?-(c.z+z):c.z+z)+2.2});
+function face(points,color){let pts=points.map(p=>vertex(...p)),out=[];for(let i=0;i<pts.length;i++){let a=pts[i],b=pts[(i+1)%pts.length],inside=a.z>=.25,other=b.z>=.25;if(inside)out.push(a);if(inside!==other){let t=(.25-a.z)/(b.z-a.z);out.push({x:a.x+(b.x-a.x)*t,y:a.y+(b.y-a.y)*t,z:.25})}}if(out.length<3)return;faces.push({pts:out,color,d:pts.reduce((n,p)=>n+p.z,0)/pts.length})}
+const body=c.color,dark='#344750',glass='#14313f';
+// Full lower body, hood and trunk.
+face([[-.9,.22,-length],[.9,.22,-length],[.9,.8,-length],[-.9,.8,-length]],body);
+face([[.9,.22,length],[-.9,.22,length],[-.9,.73,length],[.9,.73,length]],body);
+for(const side of [-1,1]){let w=.9*side;face([[w,.22,-length],[w,.22,length],[w,.76,length],[w,.8,-length]],body);face([[w,.27,-length],[w,.27,length],[w,.39,length],[w,.39,-length]],dark)}
+face([[-.9,.8,-length],[.9,.8,-length],[.86,.82,-1.35],[-.86,.82,-1.35]],body);
+face([[-.86,.8,1.05],[.86,.8,1.05],[.9,.73,length],[-.9,.73,length]],body);
+// Cabin: separate windshield, rear glass, roof and side windows.
+face([[-.86,.82,-1.35],[.86,.82,-1.35],[.72,1.44,-.72],[-.72,1.44,-.72]],glass);
+face([[.86,.8,1.05],[-.86,.8,1.05],[-.72,1.44,.42],[.72,1.44,.42]],glass);
+face([[-.72,1.44,-.72],[.72,1.44,-.72],[.72,1.44,.42],[-.72,1.44,.42]],body);
+for(const side of [-1,1]){const w=.86*side,r=.72*side;
+face([[w,.82,-1.35],[w,.8,1.05],[r,1.44,.42],[r,1.44,-.72]],body);
+face([[w*1.005,.87,-1.15],[w*1.005,.87,-.12],[r*1.005,1.35,-.12],[r*1.005,1.35,-.66]],glass);
+face([[w*1.005,.87,.01],[w*1.005,.87,.87],[r*1.005,1.35,.36],[r*1.005,1.35,.01]],glass);
+// Door seam, handles and side mirrors.
+face([[w*1.01,.43,-.08],[w*1.01,.81,-.08],[w*1.01,.81,-.05],[w*1.01,.43,-.05]],dark);
+face([[w*1.015,.72,-.35],[w*1.015,.72,-.13],[w*1.015,.76,-.13],[w*1.015,.76,-.35]],'#c1d0cf');
+face([[w,.86,.65],[side*1.06,.86,.60],[side*1.06,1,.46],[w,1,.51]],body);
+for(const z of [-1.35,1.32]){let tire=[],hub=[];for(let n=0;n<16;n++){let t=n/16*Math.PI*2;tire.push([side*.925,.32+Math.sin(t)*.32,z+Math.cos(t)*.32]);hub.push([side*.93,.32+Math.sin(t)*.17,z+Math.cos(t)*.17])}face(tire,'#101b22');face(hub,'#8b9da3')}
+}
+// Lights, registration plate, and front grille.
+for(const side of [-1,1]){let a=side*.43,b=side*.8;face([[a,.48,-length-.01],[b,.48,-length-.01],[b,.65,-length-.01],[a,.65,-length-.01]],'#ff6d59');face([[a,.47,length+.01],[b,.47,length+.01],[b,.63,length+.01],[a,.63,length+.01]],'#fff0b6')}
+face([[-.25,.38,-length-.015],[.25,.38,-length-.015],[.25,.49,-length-.015],[-.25,.49,-length-.015]],'#e7e4ce');
+face([[-.36,.32,length+.015],[.36,.32,length+.015],[.36,.47,length+.015],[-.36,.47,length+.015]],'#14252e');
+faces.sort((a,b)=>b.d-a.d);for(const f of faces){const pts=f.pts.map(p=>[camera.cx+(camera.reverse?-1:1)*camera.f*p.x/p.z,camera.cy-camera.f*p.y/p.z]);poly(pts,f.color);ctx.strokeStyle='#07171f30';ctx.lineWidth=.65;ctx.beginPath();pts.forEach((p,i)=>i?ctx.lineTo(...p):ctx.moveTo(...p));ctx.closePath();ctx.stroke()}
+}
+function drawCar(c){vehicleModel(c)}
+function collisionOutline(c){
+// Half extents match the collision test: two cars overlap at 0.6 lanes / 0.94 L.
+const halfW=.30,halfL=L*.47,near=Math.max(.9,c.z-halfL),far=Math.max(1,c.z+halfL);
+const ground=[project(c.x-halfW,near),project(c.x+halfW,near),project(c.x+halfW,far),project(c.x-halfW,far)];
+ctx.save();ctx.strokeStyle=c.passFailed?'#ff3838':'#ff806e';ctx.fillStyle='#ff765414';ctx.lineWidth=2;ctx.setLineDash([6,4]);ctx.beginPath();ground.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.closePath();ctx.fill();ctx.stroke();
+const roof=ground.map(p=>({x:p.x,y:p.y-1460/(Math.max(.8,1150/Math.max(.1,p.y-352)))}));
+ctx.beginPath();roof.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.closePath();ctx.stroke();for(let i=0;i<4;i++){ctx.beginPath();ctx.moveTo(ground[i].x,ground[i].y);ctx.lineTo(roof[i].x,roof[i].y);ctx.stroke()}ctx.restore();
+}
+function mirrorGround(camera){
+const ground=(wx,d)=>{let depth=Math.max(.25,d+2.2);return [camera.cx-(wx-camera.eye)*3.5*camera.f/depth,camera.cy+1.15*camera.f/depth]};
+poly([ground(-.5,10000),ground(2.5,10000),ground(2.5,0),ground(-.5,0)],'#3a454b');
+for(let d=1;d<180;d+=8)for(let l of [.5,1.5])poly([ground(l-.012,d),ground(l+.012,d),ground(l+.012,d+3),ground(l-.012,d+3)],'#d4d8c3');
+}
+function mirror(mx,label,l){ctx.save();ctx.beginPath();ctx.roundRect(mx,460,206,118,20);ctx.clip();let g=ctx.createLinearGradient(0,460,0,580);g.addColorStop(0,'#77a7b3');g.addColorStop(.45,'#305563');g.addColorStop(1,'#172c34');ctx.fillStyle=g;ctx.fillRect(mx,460,206,118);mirrorGround({cx:mx+103,cy:500,f:180,eye:l});let cars=traffic.filter(c=>c.z<0&&Math.abs(c.x-l)<.7).sort((a,b)=>a.z-b.z);for(let c of cars)vehicleModel(c,{cx:mx+103,cy:500,f:180,eye:l,reverse:true});ctx.restore();ctx.strokeStyle='#102027';ctx.lineWidth=9;ctx.beginPath();ctx.roundRect(mx,460,206,118,20);ctx.stroke();ctx.fillStyle='#c6d5d8';ctx.font='12px Arial';ctx.fillText(label,mx+15,479)}
+function rearMirror(){
+const mx=440,my=100,mw=320,mh=122;
+ctx.save();ctx.beginPath();ctx.roundRect(mx,my,mw,mh,16);ctx.clip();
+let g=ctx.createLinearGradient(0,my,0,my+mh);g.addColorStop(0,'#75a3b0');g.addColorStop(1,'#c5c8ad');ctx.fillStyle=g;ctx.fillRect(mx,my,mw,mh);
+mirrorGround({cx:mx+mw/2,cy:my+39,f:250,eye:x});
+for(const c of traffic.filter(c=>c.z<0&&c.z>-150).sort((a,b)=>a.z-b.z))vehicleModel(c,{cx:mx+mw/2,cy:my+39,f:250,eye:x,reverse:true});
+ctx.fillStyle='#dbe8e9';ctx.font='12px Arial';ctx.fillText('REAR VIEW · 백미러',mx+13,my+19);ctx.restore();ctx.strokeStyle='#0a1c24';ctx.lineWidth=8;ctx.beginPath();ctx.roundRect(mx,my,mw,mh,16);ctx.stroke();ctx.fillStyle='#0a1c24';ctx.fillRect(590,my-12,20,10);
+}
+function render(){ctx.clearRect(0,0,1200,810);let sky=ctx.createLinearGradient(0,0,0,430);sky.addColorStop(0,'#173c50');sky.addColorStop(.7,'#8bb9be');sky.addColorStop(1,'#ecceab');ctx.fillStyle=sky;ctx.fillRect(0,0,1200,810);ctx.fillStyle='#dce4cb';ctx.beginPath();ctx.arc(930,210,25,0,7);ctx.fill();poly([[0,350],[130,295],[250,330],[400,278],[560,347],[780,302],[900,344],[1200,285],[1200,390],[0,390]],'#416c75');for(let i=0;i<30;i++){let bx=i*43,h=18+(i*37%48);ctx.fillStyle=i%2?'#294d5a':'#365b66';ctx.fillRect(bx,355-h,29,h)}ctx.fillStyle='#52797c';ctx.fillRect(0,352,1200,458);
+const edge=(wx,z)=>{let p=project(wx,z);return [p.x,p.y]};poly([edge(-.5,1400),edge(2.5,1400),edge(2.5,.8),edge(-.5,.8)],'#3a454b');
+for(let z=180;z>0;z-=4){let d=z-road%4;if(d<.8)continue;for(let l of [-.5,2.5]){let a=project(l,d),b=project(l,d+4);poly([[a.x-2*a.s,a.y],[a.x+2*a.s,a.y],[b.x+2*b.s,b.y],[b.x-2*b.s,b.y]],'#d1d6bf')}if(Math.floor(z/4)%2===0)for(let l of [.5,1.5]){let a=project(l,d),b=project(l,d+3);poly([[a.x-1.6*a.s,a.y],[a.x+1.6*a.s,a.y],[b.x+1.6*b.s,b.y],[b.x-1.6*b.s,b.y]],'#dfddc9')}}
+// Gwangan bridge towers and suspension cables
+ctx.strokeStyle='#9bbab9';ctx.lineWidth=5;for(let bx of [290,910]){ctx.beginPath();ctx.moveTo(bx-27,360);ctx.lineTo(bx-19,172);ctx.lineTo(bx+19,172);ctx.lineTo(bx+27,360);ctx.moveTo(bx-21,214);ctx.lineTo(bx+21,214);ctx.stroke()}ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(0,290);ctx.quadraticCurveTo(160,335,290,180);ctx.quadraticCurveTo(600,390,910,180);ctx.quadraticCurveTo(1070,335,1200,290);ctx.stroke();traffic.filter(c=>c.z+L*.47> -1.9&&c.z<180).sort((a,b)=>b.z-a.z).forEach(c=>{drawCar(c);collisionOutline(c)});
+poly([[0,0],[1200,0],[1200,96],[960,82],[240,82],[0,96]],'#09191f');poly([[0,70],[35,75],[177,663],[125,702],[0,330]],'#142830');poly([[1165,75],[1200,70],[1200,330],[1075,702],[1023,663]],'#142830');mirror(12,'LEFT MIRROR',x-1);mirror(982,'RIGHT MIRROR',x+1);rearMirror();
+poly([[0,674],[240,647],[960,647],[1200,674],[1200,810],[0,810]],'#09191f');ctx.strokeStyle='#31454b';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(0,720);ctx.quadraticCurveTo(600,640,1200,720);ctx.stroke();ctx.fillStyle='#142c35';ctx.beginPath();ctx.roundRect(480,711,240,88,15);ctx.fill();ctx.fillStyle='#d4f677';ctx.font='bold 35px Arial';ctx.textAlign='center';ctx.fillText(Math.round(speed/BASE*100)+'%',600,753);ctx.font='11px Arial';ctx.fillStyle='#7ea1ad';ctx.fillText('BASE SPEED 100%',600,776);ctx.textAlign='left';ctx.strokeStyle='#263a42';ctx.lineWidth=23;ctx.beginPath();ctx.arc(430,865,170,Math.PI,Math.PI*2);ctx.stroke();if(hit>0){ctx.fillStyle=`rgba(255,70,45,${hit*.22})`;ctx.fillRect(0,0,1200,810)}}
+function setKey(k,v){k=k.length===1?k.toLowerCase():k;keys[k]=v}window.addEventListener('keydown',e=>{if(['ArrowLeft','ArrowRight','a','s','A','S'].includes(e.key)){e.preventDefault();setKey(e.key,true)}});window.addEventListener('keyup',e=>setKey(e.key,false));window.addEventListener('blur',()=>Object.keys(keys).forEach(k=>keys[k]=false));document.querySelectorAll('[data-key]').forEach(b=>{b.addEventListener('pointerdown',e=>{e.preventDefault();b.setPointerCapture(e.pointerId);setKey(b.dataset.key,true)});for(let evt of ['pointerup','pointercancel','lostpointercapture'])b.addEventListener(evt,()=>setKey(b.dataset.key,false))});$('start').onclick=reset;let last=performance.now();function frame(now){let dt=Math.min((now-last)/1000,.04);last=now;update(dt);render();requestAnimationFrame(frame)}requestAnimationFrame(frame);
+</script></html>
